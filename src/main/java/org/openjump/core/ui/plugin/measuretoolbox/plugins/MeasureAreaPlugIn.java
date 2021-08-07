@@ -2,10 +2,10 @@ package org.openjump.core.ui.plugin.measuretoolbox.plugins;
 
 import javax.swing.ImageIcon;
 
+import com.vividsolutions.jump.I18N;
 import org.openjump.core.ui.plugin.measuretoolbox.cursortools.MeasureAreaTool;
 import org.openjump.core.ui.plugin.measuretoolbox.cursortools.MeasureRectangleTool;
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 
 import com.vividsolutions.jump.workbench.WorkbenchContext;
 import com.vividsolutions.jump.workbench.plugin.AbstractPlugIn;
@@ -22,7 +22,8 @@ import com.vividsolutions.jump.workbench.ui.cursortool.QuasimodeTool;
  */
 public class MeasureAreaPlugIn extends AbstractPlugIn {
 
-  public static ImageIcon ICON = IconLoader.icon("Ruler_polygon.gif");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+  private static final ImageIcon ICON = IconLoader.icon("Ruler_polygon.gif");
 
   @Override
   public boolean execute(PlugInContext context) throws Exception {
@@ -41,8 +42,7 @@ public class MeasureAreaPlugIn extends AbstractPlugIn {
     return ICON;
   }
 
-  public static final String NAME = I18NPlug
-      .getI18N("MeasureToolbox.MeasureTools.Area");
+  public static final String NAME = i18n.get("MeasureToolbox.MeasureTools.Area");
 
   @Override
   public String getName() {
@@ -51,8 +51,7 @@ public class MeasureAreaPlugIn extends AbstractPlugIn {
 
   public static MultiEnableCheck createEnableCheck(
       WorkbenchContext workbenchContext) {
-    EnableCheckFactory checkFactory = new EnableCheckFactory(
-        workbenchContext);
+    EnableCheckFactory checkFactory = workbenchContext.createPlugInContext().getCheckFactory();
 
     return new MultiEnableCheck().add(checkFactory
         .createWindowWithSelectionManagerMustBeActiveCheck());

@@ -89,7 +89,7 @@ public class GeoShowScaleRenderer extends SimpleRenderer {
             double maxx = envelope.getMaxX();
             double miny = envelope.getMinY();
             double maxy = envelope.getMaxY();
-            double modelWidth = CoordinateListMetrics_extended.computeGeographicLenght(maxy, maxx, miny, minx);
+            double modelWidth = CoordinateListMetrics_extended.computeGeographicLength(maxy, maxx, miny, minx);
             horizontalScale = modelWidth * 100
                     / (INCHTOCM / resolution * panelWidth);
         } else {
@@ -114,7 +114,7 @@ public class GeoShowScaleRenderer extends SimpleRenderer {
         double maxx = envelope.getMaxX();
         double miny = envelope.getMinY();
         double maxy = envelope.getMaxY();
-        double modelWidth =  CoordinateListMetrics_extended.computeGeographicLenght(maxy, maxx, miny, minx);
+        double modelWidth =  CoordinateListMetrics_extended.computeGeographicLength(maxy, maxx, miny, minx);
         //double modelWidth = Formula.VicentyDistance(maxy, maxx, miny, minx);
         // -----
         // example:

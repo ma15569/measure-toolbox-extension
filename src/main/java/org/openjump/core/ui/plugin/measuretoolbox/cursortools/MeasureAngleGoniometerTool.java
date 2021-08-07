@@ -9,9 +9,9 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
+import com.vividsolutions.jump.I18N;
 import org.openjump.core.geomutils.GeoUtils;
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 import org.openjump.core.ui.plugin.measuretoolbox.plugins.ToolboxMeasurePlugIn;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.CoordinateListMetrics_extended;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.Measure_MultiClickArcTool;
@@ -38,8 +38,9 @@ import com.vividsolutions.jump.workbench.ui.LayerViewPanel;
  */
 public class MeasureAngleGoniometerTool extends Measure_MultiClickArcTool {
 
-  public static final String NAME = I18NPlug
-      .getI18N("MeasureToolbox.MeasureTools.Goniometer");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+  public static final String NAME = i18n
+      .get("MeasureToolbox.MeasureTools.Goniometer");
   public static final Icon ICON = IconLoader
       .icon("Ruler_goniometer.gif");
 
@@ -51,6 +52,7 @@ public class MeasureAngleGoniometerTool extends Measure_MultiClickArcTool {
   PlugInContext context;
 
   public MeasureAngleGoniometerTool(PlugInContext context) {
+    super(context);
     drawClosed = true;
     this.context = context;
     setStroke(new BasicStroke(2));
@@ -85,10 +87,8 @@ public class MeasureAngleGoniometerTool extends Measure_MultiClickArcTool {
         JOptionPane
             .showMessageDialog(
                 null,
-                I18NPlug
-                    .getI18N("MeasureToolbox.geodesy-warning"),
-                I18NPlug.getI18N("MeasureToolbox.error"),
-                JOptionPane.ERROR_MESSAGE);
+                i18n.get("MeasureToolbox.geodesy-warning"),
+                i18n.get("MeasureToolbox.error"), JOptionPane.ERROR_MESSAGE);
         return;
       }
     }

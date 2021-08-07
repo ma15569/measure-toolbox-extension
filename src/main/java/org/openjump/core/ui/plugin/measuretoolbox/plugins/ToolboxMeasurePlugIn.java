@@ -12,17 +12,15 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.vividsolutions.jump.I18N;
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 import org.openjump.core.ui.plugin.measuretoolbox.scale.GeoShowScalePlugIn;
 import org.saig.core.gui.swing.sldeditor.util.FormUtils;
 
-import com.vividsolutions.jump.workbench.WorkbenchContext;
 import com.vividsolutions.jump.workbench.plugin.AbstractPlugIn;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import com.vividsolutions.jump.workbench.ui.GUIUtil;
 import com.vividsolutions.jump.workbench.ui.MenuNames;
-import com.vividsolutions.jump.workbench.ui.plugin.FeatureInstaller;
 import com.vividsolutions.jump.workbench.ui.toolbox.ToolboxDialog;
 import com.vividsolutions.jump.workbench.ui.toolbox.ToolboxPlugIn;
 
@@ -33,23 +31,21 @@ import com.vividsolutions.jump.workbench.ui.toolbox.ToolboxPlugIn;
  */
 public class ToolboxMeasurePlugIn extends ToolboxPlugIn {
 
-  //WorkbenchContext workbenchContext;
-  //public static final String LAYER_NAME = I18NPlug
-  //    .getI18N("MeasureToolbox.layer");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
 
-  public static final String MAPUNIT = I18NPlug
-      .getI18N("MeasureToolbox.panel.map_unit");
-  public static final String MEASUREUNIT = I18NPlug
-      .getI18N("MeasureToolbox.panel.measure_unit");
+  public static final String MAPUNIT = i18n
+      .get("MeasureToolbox.panel.map_unit");
+  public static final String MEASUREUNIT = i18n
+      .get("MeasureToolbox.panel.measure_unit");
 
   public static final String GeographicCRS =
-      I18NPlug.getI18N("MeasureToolbox.panel.measure_in_EPSG4326");
+      i18n.get("MeasureToolbox.panel.measure_in_EPSG4326");
   public static final String PlanarCRS =
-      I18NPlug.getI18N("MeasureToolbox.panel.measure_in_planar_coordinates");
+      i18n.get("MeasureToolbox.panel.measure_in_planar_coordinates");
 
   @Override
   public String getName() {
-    return I18NPlug.getI18N("MeasureToolbox.toolbox");
+    return i18n.get("MeasureToolbox.toolbox");
   }
 
   private JPanel centralPanel;
@@ -81,12 +77,9 @@ public class ToolboxMeasurePlugIn extends ToolboxPlugIn {
   @Override
 
   public void initialize(PlugInContext context) {
-    WorkbenchContext workbenchContext = context.getWorkbenchContext();
-    new FeatureInstaller(workbenchContext);
-
     context.getFeatureInstaller().addMainMenuPlugin(this,
-        new String[]{MenuNames.PLUGINS}, I18NPlug
-            .getI18N("MeasureToolbox.toolbox"), false,
+        new String[]{MenuNames.PLUGINS},
+        i18n.get("MeasureToolbox.toolbox"), false,
         getIcon(), null);
   }
 
@@ -97,7 +90,7 @@ public class ToolboxMeasurePlugIn extends ToolboxPlugIn {
   protected void initializeToolbox(final ToolboxDialog toolbox) {
     this.toolbox = toolbox;
 
-    toolbox.setTitle(I18NPlug.getI18N("MeasureToolbox.toolbox"));
+    toolbox.setTitle(i18n.get("MeasureToolbox.toolbox"));
     toolbox.setIconImage(ICON.getImage());
     toolbox.addToolBar();
 
@@ -196,13 +189,13 @@ public class ToolboxMeasurePlugIn extends ToolboxPlugIn {
     if (centralPanel == null) {
       centralPanel = new JPanel(new GridBagLayout());
       coordinateCheck = new JCheckBox(
-          I18NPlug.getI18N("MeasureToolbox.panel.measure_in_EPSG4326")); //$NON-NLS-1$
+          i18n.get("MeasureToolbox.panel.measure_in_EPSG4326")); //$NON-NLS-1$
 
       saveCheck = new JCheckBox(
-          I18NPlug.getI18N("MeasureToolbox.panel.save_progressive_measurements")); //$NON-NLS-1$
+          i18n.get("MeasureToolbox.panel.save_progressive_measurements")); //$NON-NLS-1$
 
       scaleCheck = new JCheckBox(
-          I18NPlug.getI18N("MeasureToolbox.panel.show_scale_bar")); //$NON-NLS-1$
+          i18n.get("MeasureToolbox.panel.show_scale_bar")); //$NON-NLS-1$
 
       FormUtils.addRowInGBL(centralPanel, 2, 0, UnitPanel(), MeasurePanel());
       FormUtils.addRowInGBL(centralPanel, 3, 0, coordinateCheck);
@@ -253,10 +246,5 @@ public class ToolboxMeasurePlugIn extends ToolboxPlugIn {
     getmapLabel().setEnabled(!coordinateCheck
         .isSelected());
   }
-
-  /*
-   * End of code
-   */
-
 
 }

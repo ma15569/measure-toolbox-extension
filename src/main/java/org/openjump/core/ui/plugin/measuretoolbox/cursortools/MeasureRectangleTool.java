@@ -9,8 +9,8 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
+import com.vividsolutions.jump.I18N;
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 import org.openjump.core.ui.plugin.measuretoolbox.plugins.ToolboxMeasurePlugIn;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.CoordinateListMetrics_extended;
 
@@ -33,17 +33,16 @@ import com.vividsolutions.jump.workbench.ui.cursortool.DragTool;
 
 public class MeasureRectangleTool extends DragTool {
 
-  public static final String NAME = I18NPlug
-      .getI18N("MeasureToolbox.MeasureTools.Area");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+
+  public static final String NAME = i18n
+      .get("MeasureToolbox.MeasureTools.Area");
   public static final Icon ICON = IconLoader
       .icon("Ruler_polygon.gif");
 
-  public static String sArea = I18NPlug
-      .getI18N("MeasureToolbox.Area");
-  public static String sPerimeter = I18NPlug
-      .getI18N("MeasureToolbox.Perimeter");
-  public static final String ERROR = I18NPlug
-      .getI18N("MeasureToolbox.error_geometry");
+  public static String sArea = i18n.get("MeasureToolbox.Area");
+  public static String sPerimeter = i18n.get("MeasureToolbox.Perimeter");
+  public static final String ERROR = i18n.get("MeasureToolbox.error_geometry");
 
 
   double area;
@@ -59,8 +58,8 @@ public class MeasureRectangleTool extends DragTool {
   }
 
   public MeasureRectangleTool(PlugInContext context) {
+    super(context.getWorkbenchContext());
     this.context = context;
-
     setStroke(new BasicStroke(2));
     allowSnapping();
   }
@@ -85,9 +84,8 @@ public class MeasureRectangleTool extends DragTool {
         JOptionPane
             .showMessageDialog(
                 null,
-                I18NPlug
-                    .getI18N("MeasureToolbox.geodesy-warning"),
-                I18NPlug.getI18N("MeasureToolbox.error"),
+                i18n.get("MeasureToolbox.geodesy-warning"),
+                i18n.get("MeasureToolbox.error"),
                 JOptionPane.ERROR_MESSAGE);
         return;
       }
@@ -158,7 +156,7 @@ public class MeasureRectangleTool extends DragTool {
     feature.setAttribute("TYPE", "Area");
     feature.setAttribute("TEXT", unitConverter.decimalformat(area) + unitConverter.measuredAreaUnit()
         + " - " + unitConverter.decimalformat(perimeter) + unitConverter.measuredLengthUnit());
-    feature.setAttribute("LENGHT", perimeter);
+    feature.setAttribute("LENGTH", perimeter);
     feature.setAttribute("AREA", area);
     feature.setAttribute("GEOM", getPolygon());
     return feature;

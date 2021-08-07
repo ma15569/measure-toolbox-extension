@@ -9,8 +9,8 @@ import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
+import com.vividsolutions.jump.I18N;
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.CoordinateListMetrics_extended;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.UnitConverter;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.MeasurementLayerFinder;
@@ -31,7 +31,6 @@ import com.vividsolutions.jump.feature.Feature;
 import com.vividsolutions.jump.feature.FeatureCollection;
 import com.vividsolutions.jump.feature.FeatureDataset;
 import com.vividsolutions.jump.feature.FeatureSchema;
-import com.vividsolutions.jump.workbench.WorkbenchContext;
 import com.vividsolutions.jump.workbench.model.Layer;
 import com.vividsolutions.jump.workbench.model.StandardCategoryNames;
 import com.vividsolutions.jump.workbench.plugin.AbstractPlugIn;
@@ -57,11 +56,12 @@ import de.latlon.deejump.plugin.style.CircleVertexStyle;
  */
 public class MeasureSelectFeaturePlugIn extends AbstractPlugIn {
 
-  public static final String NAME = I18NPlug
-      .getI18N("MeasureToolbox.MeasurePlugin.MeasureSelectedFeature.name");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
 
-  public static final Icon ICON = IconLoader.icon("Ruler_measurement.gif");
-  //public static final ImageIcon ICON2 = IconLoader.icon("Ruler_select.gif");
+  public static final String NAME = i18n
+      .get("MeasureToolbox.MeasurePlugin.MeasureSelectedFeature.name");
+
+  private static final Icon ICON = IconLoader.icon("Ruler_measurement.gif");
 
   //Geometry measureGeometry = null;
   double area;
@@ -71,13 +71,11 @@ public class MeasureSelectFeaturePlugIn extends AbstractPlugIn {
 
   @Override
   public void initialize(PlugInContext context) {
-    WorkbenchContext workbenchContext = context.getWorkbenchContext();
-    FeatureInstaller featureInstaller = new FeatureInstaller(
-        workbenchContext);
+    FeatureInstaller featureInstaller = context.getFeatureInstaller();
     JPopupMenu popupMenu = LayerViewPanel.popupMenu();
     featureInstaller.addPopupMenuPlugin(popupMenu, this, getName(), false,
         null, // to do: add icon
-        createEnableCheck(workbenchContext));
+        getEnableCheck(context));
   }
 
   @Override
@@ -94,10 +92,11 @@ public class MeasureSelectFeaturePlugIn extends AbstractPlugIn {
       JOptionPane
           .showMessageDialog(
               null,
-              I18NPlug.getI18N("MeasureToolbox.MeasurePlugin.MeasureSelectedFeature.message1"),
+              i18n.get("MeasureToolbox.MeasurePlugin.MeasureSelectedFeature.message1"),
               null, JOptionPane.INFORMATION_MESSAGE);
       context.getLayerViewPanel().setCurrentCursorTool(
-          new SelectFeaturesTool());
+          new SelectFeaturesTool(context.getWorkbenchContext())
+      );
 
       return false;
     }
@@ -110,9 +109,8 @@ public class MeasureSelectFeaturePlugIn extends AbstractPlugIn {
           JOptionPane
               .showMessageDialog(
                   null,
-                  I18NPlug
-                      .getI18N("MeasureToolbox.geodesy-warning"),
-                  I18NPlug.getI18N("MeasureToolbox.error"),
+                  i18n.get("MeasureToolbox.geodesy-warning"),
+                  i18n.get("MeasureToolbox.error"),
                   JOptionPane.ERROR_MESSAGE);
           return false;
         }
@@ -129,8 +127,8 @@ public class MeasureSelectFeaturePlugIn extends AbstractPlugIn {
                 null,
                 geom.getGeometryType()
                     + ": "
-                    + I18NPlug
-                    .getI18N("MeasureToolbox.MeasurePlugin.MeasureSelectedFeature.message3"),
+                    + i18n
+                    .get("MeasureToolbox.MeasurePlugin.MeasureSelectedFeature.message3"),
                 null, JOptionPane.INFORMATION_MESSAGE);
         return false;
       }
@@ -235,8 +233,8 @@ public class MeasureSelectFeaturePlugIn extends AbstractPlugIn {
               null,
               geom.getGeometryType()
                   + ": "
-                  + I18NPlug
-                  .getI18N("MeasureToolbox.MeasurePlugin.MeasureSelectedFeature.message3"),
+                  + i18n
+                  .get("MeasureToolbox.MeasurePlugin.MeasureSelectedFeature.message3"),
               null, JOptionPane.INFORMATION_MESSAGE);
       return null;
     }
@@ -246,10 +244,9 @@ public class MeasureSelectFeaturePlugIn extends AbstractPlugIn {
     return feature;
   }
 
-  public static MultiEnableCheck createEnableCheck(
-      WorkbenchContext workbenchContext) {
-    EnableCheckFactory checkFactory = new EnableCheckFactory(
-        workbenchContext);
+  public MultiEnableCheck getEnableCheck(
+      PlugInContext context) {
+    EnableCheckFactory checkFactory = context.getCheckFactory();
 
     return new MultiEnableCheck()
         .add(checkFactory
@@ -276,8 +273,7 @@ public class MeasureSelectFeaturePlugIn extends AbstractPlugIn {
 
   }
 
-  public static final String LAYER_NAME = I18NPlug
-      .getI18N("MeasureToolbox.layer");
+  public static final String LAYER_NAME = i18n.get("MeasureToolbox.layer");
 
   public static Layer measureLayer(PlugInContext context) {
     Layer measureLayer = context.getLayerManager().getLayer(LAYER_NAME);
@@ -291,7 +287,7 @@ public class MeasureSelectFeaturePlugIn extends AbstractPlugIn {
     schema.addAttribute("DEGREE", AttributeType.DOUBLE);
     schema.addAttribute("DDMMSS", AttributeType.DOUBLE);
     schema.addAttribute("AREA", AttributeType.DOUBLE);
-    schema.addAttribute("LENGHT", AttributeType.DOUBLE);
+    schema.addAttribute("LENGTH", AttributeType.DOUBLE);
     schema.addAttribute("X", AttributeType.DOUBLE);
     schema.addAttribute("Y", AttributeType.DOUBLE);
     schema.addAttribute("GEOM", AttributeType.GEOMETRY);

@@ -2,11 +2,9 @@ package org.openjump.core.ui.plugin.measuretoolbox.utils;
 
 import java.awt.*;
 
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
-
+import com.vividsolutions.jump.I18N;
 import org.locationtech.jts.geom.Geometry;
 import com.vividsolutions.jump.feature.AttributeType;
-import com.vividsolutions.jump.feature.Feature;
 import com.vividsolutions.jump.feature.FeatureCollection;
 import com.vividsolutions.jump.feature.FeatureDataset;
 import com.vividsolutions.jump.feature.FeatureSchema;
@@ -21,6 +19,8 @@ import de.latlon.deejump.plugin.style.CircleVertexStyle;
 
 public class MeasurementLayerFinder extends SystemLayerFinder {
 
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+
   public MeasurementLayerFinder(String layerName,
                                 LayerManagerProxy layerManagerProxy) {
     super(LAYER_NAME, layerManagerProxy);
@@ -33,8 +33,7 @@ public class MeasurementLayerFinder extends SystemLayerFinder {
    * Giuseppe Aruta - Sept 1th 2015
    */
 
-  public static final String LAYER_NAME = I18NPlug
-      .getI18N("MeasureToolbox.layer");
+  public static final String LAYER_NAME = i18n.get("MeasureToolbox.layer");
 
 
   public static Layer measureLayer(PlugInContext context) {
@@ -49,7 +48,7 @@ public class MeasurementLayerFinder extends SystemLayerFinder {
     schema.addAttribute("DEGREE", AttributeType.DOUBLE);
     schema.addAttribute("DDMMSS", AttributeType.DOUBLE);
     schema.addAttribute("AREA", AttributeType.DOUBLE);
-    schema.addAttribute("LENGHT", AttributeType.DOUBLE);
+    schema.addAttribute("LENGTH", AttributeType.DOUBLE);
     schema.addAttribute("UNIT", AttributeType.STRING);
     schema.addAttribute("X", AttributeType.DOUBLE);
     schema.addAttribute("Y", AttributeType.DOUBLE);

@@ -3,10 +3,9 @@ package org.openjump.core.ui.plugin.measuretoolbox.plugins;
 import javax.swing.Icon;
 import javax.swing.JPopupMenu;
 
+import com.vividsolutions.jump.I18N;
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 
-import com.vividsolutions.jump.workbench.WorkbenchContext;
 import com.vividsolutions.jump.workbench.model.Layer;
 import com.vividsolutions.jump.workbench.model.StandardCategoryNames;
 import com.vividsolutions.jump.workbench.model.UndoableCommand;
@@ -15,7 +14,6 @@ import com.vividsolutions.jump.workbench.plugin.EnableCheckFactory;
 import com.vividsolutions.jump.workbench.plugin.MultiEnableCheck;
 import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import com.vividsolutions.jump.workbench.ui.LayerViewPanel;
-import com.vividsolutions.jump.workbench.ui.plugin.FeatureInstaller;
 
 /**
  * clean measurements
@@ -24,13 +22,14 @@ import com.vividsolutions.jump.workbench.ui.plugin.FeatureInstaller;
  */
 public class CleanMeasurePlugIn extends AbstractPlugIn {
 
-  public static final String NAME = I18NPlug
-      .getI18N("MeasureToolbox.MeasurePlugin.CleanMeasurePlugIn.name");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+
+  private static final String NAME = i18n
+      .get("MeasureToolbox.MeasurePlugin.CleanMeasurePlugIn.name");
 
   public static final Icon ICON = IconLoader.icon("cross.png");
 
-  public static final String LAYER_NAME = I18NPlug
-      .getI18N("MeasureToolbox.layer");
+  public static final String LAYER_NAME = i18n.get("MeasureToolbox.layer");
 
   //Geometry measureGeometry = null;
   //double area;
@@ -38,13 +37,11 @@ public class CleanMeasurePlugIn extends AbstractPlugIn {
 
   @Override
   public void initialize(PlugInContext context) {
-    WorkbenchContext workbenchContext = context.getWorkbenchContext();
-    FeatureInstaller featureInstaller = new FeatureInstaller(
-        workbenchContext);
+
     JPopupMenu popupMenu = LayerViewPanel.popupMenu();
-    featureInstaller.addPopupMenuPlugin(popupMenu, this, getName(), false,
-        null, // to do: add icon
-        createEnableCheck(workbenchContext));
+    context.getFeatureInstaller().addPopupMenuPlugin(popupMenu, this,
+        getName(), false, null, // to do: add icon
+        getEnableCheck(context));
   }
 
   @Override
@@ -81,10 +78,9 @@ public class CleanMeasurePlugIn extends AbstractPlugIn {
 
   }
 
-  public static MultiEnableCheck createEnableCheck(
-      WorkbenchContext workbenchContext) {
-    EnableCheckFactory checkFactory = new EnableCheckFactory(
-        workbenchContext);
+  public MultiEnableCheck getEnableCheck(PlugInContext context) {
+
+    EnableCheckFactory checkFactory = context.getCheckFactory();
 
     return new MultiEnableCheck()
         .add(checkFactory

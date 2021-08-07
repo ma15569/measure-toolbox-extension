@@ -5,8 +5,8 @@ import java.awt.Cursor;
 
 import javax.swing.Icon;
 
+import com.vividsolutions.jump.I18N;
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 import org.openjump.core.ui.plugin.measuretoolbox.plugins.ToolboxMeasurePlugIn;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.CoordinateListMetrics_extended;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.Measure_NClickTool;
@@ -28,10 +28,10 @@ import com.vividsolutions.jump.workbench.plugin.PlugInContext;
  */
 public class MeasureXYTool extends Measure_NClickTool {
 
-  public static final String NAME = I18NPlug
-      .getI18N("MeasureToolbox.MeasureTools.Coordinates");
-  public static final Icon ICON = IconLoader
-      .icon("Ruler_XY.gif");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+
+  public static final String NAME = i18n.get("MeasureToolbox.MeasureTools.Coordinates");
+  public static final Icon ICON = IconLoader.icon("Ruler_XY.gif");
 
   UnitConverter unitConverter = new UnitConverter();
 
@@ -43,7 +43,7 @@ public class MeasureXYTool extends Measure_NClickTool {
   PlugInContext context;
 
   public MeasureXYTool(PlugInContext context) {
-    super(1);
+    super(context, 1);
     this.context = context;
     setStroke(new BasicStroke(2));
     setMetricsDisplay(new CoordinateListMetrics_extended());

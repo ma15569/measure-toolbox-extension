@@ -13,8 +13,8 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
+import com.vividsolutions.jump.I18N;
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 import org.openjump.core.ui.plugin.measuretoolbox.plugins.ToolboxMeasurePlugIn;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.CoordinateListMetrics_extended;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.Measure_NClickTool;
@@ -35,8 +35,10 @@ import com.vividsolutions.jump.workbench.ui.LayerViewPanel;
 
 public class MeasureAzimuthTool extends Measure_NClickTool {
 
-  public static final String NAME = I18NPlug
-      .getI18N("MeasureToolbox.MeasureTools.Azimuth");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+
+  public static final String NAME = i18n
+      .get("MeasureToolbox.MeasureTools.Azimuth");
   public static final Icon ICON = IconLoader
       .icon("compass.png");
 
@@ -51,7 +53,7 @@ public class MeasureAzimuthTool extends Measure_NClickTool {
   PlugInContext context;
 
   public MeasureAzimuthTool(PlugInContext context) {
-    super(2);
+    super(context, 2);
     this.context = context;
     setStroke(new BasicStroke(2));
     //  setMetricsDisplay(new CoordinateListMetrics_extended());
@@ -83,9 +85,8 @@ public class MeasureAzimuthTool extends Measure_NClickTool {
         JOptionPane
             .showMessageDialog(
                 null,
-                I18NPlug
-                    .getI18N("MeasureToolbox.geodesy-warning"),
-                I18NPlug.getI18N("MeasureToolbox.error"),
+                i18n.get("MeasureToolbox.geodesy-warning"),
+                i18n.get("MeasureToolbox.error"),
                 JOptionPane.ERROR_MESSAGE);
         return;
       }
@@ -253,7 +254,7 @@ public class MeasureAzimuthTool extends Measure_NClickTool {
 
     if (ToolboxMeasurePlugIn.coordinateCheck.isSelected()) {
       distString = "(Geographics) - ";
-      length1 = CoordinateListMetrics_extended.computeGeographicLenght(
+      length1 = CoordinateListMetrics_extended.computeGeographicLength(
           a.y, a.x, b.y, b.x);
 
     } else {

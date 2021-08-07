@@ -45,6 +45,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.vividsolutions.jump.I18N;
+import com.vividsolutions.jump.workbench.WorkbenchContext;
+import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import org.openjump.core.ui.plugin.edittoolbox.tab.ConstraintManager;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -52,7 +55,6 @@ import org.locationtech.jts.util.Assert;
 import com.vividsolutions.jump.workbench.ui.LayerViewPanel;
 import com.vividsolutions.jump.workbench.ui.WorkbenchFrame;
 import com.vividsolutions.jump.workbench.ui.cursortool.AbstractCursorTool;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 
 /**
  * Modified from MultiClickTool.class from OpenJUMP to use new
@@ -61,24 +63,17 @@ import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
  */
 public abstract class Measure_MultiClickTool extends AbstractCursorTool {
 
-  public static String LAYER_NAME = I18NPlug
-      .getI18N("MeasureToolbox.layer");
-  public static String sArea = I18NPlug
-      .getI18N("MeasureToolbox.Area");
-  public static String sAzimuth = I18NPlug
-      .getI18N("MeasureToolbox.Azimuth");
-  public static String sAngle = I18NPlug
-      .getI18N("MeasureToolbox.Angle");
-  public static String sLength = I18NPlug
-      .getI18N("MeasureToolbox.Length");
-  public static String sPerimeter = I18NPlug
-      .getI18N("MeasureToolbox.Perimeter");
-  public static String sRadius = I18NPlug
-      .getI18N("MeasureToolbox.Radius");
-  public static String sArc = I18NPlug
-      .getI18N("MeasureToolbox.Arc");
-  public static final String ERROR = I18NPlug
-      .getI18N("MeasureToolbox.error_geometry");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+
+  public static String LAYER_NAME = i18n.get("MeasureToolbox.layer");
+  public static String sArea = i18n.get("MeasureToolbox.Area");
+  public static String sAzimuth = i18n.get("MeasureToolbox.Azimuth");
+  public static String sAngle = i18n.get("MeasureToolbox.Angle");
+  public static String sLength = i18n.get("MeasureToolbox.Length");
+  public static String sPerimeter = i18n.get("MeasureToolbox.Perimeter");
+  public static String sRadius = i18n.get("MeasureToolbox.Radius");
+  public static String sArc = i18n.get("MeasureToolbox.Arc");
+  public static final String ERROR = i18n.get("MeasureToolbox.error_geometry");
 
 
   // protected Image origImage;
@@ -96,8 +91,12 @@ public abstract class Measure_MultiClickTool extends AbstractCursorTool {
   private ConstraintManager constraintManager;
   protected boolean drawClosed = false;
 
-  public Measure_MultiClickTool() {
+  public Measure_MultiClickTool(WorkbenchContext wc) {
+    super(wc);
+  }
 
+  public Measure_MultiClickTool(PlugInContext context) {
+    super(context.getWorkbenchContext());
   }
 
   protected void setMetricsDisplay(CoordinateListMetrics_extended metrics) {

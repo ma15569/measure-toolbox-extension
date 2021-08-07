@@ -8,7 +8,7 @@ import org.openjump.core.ui.plugin.measuretoolbox.plugins.ToolboxMeasurePlugIn;
 /**
  * This class
  * a) defines conversion parameters between SI and non SI Units
- * (lenghtConverter and AreaConverted)
+ * (lengthConverter and AreaConverted)
  * b) define text unit of the map (mapLengthUnit and (mapAreaUnit)
  * c) define text unit of the measurements (measureLengthUnit and (measureAreaUnit)
  * d) define an adaptative form for decimal number (decimalformat (double length), from

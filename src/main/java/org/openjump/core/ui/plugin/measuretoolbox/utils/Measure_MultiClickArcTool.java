@@ -5,6 +5,8 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 
+import com.vividsolutions.jump.workbench.WorkbenchContext;
+import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import org.openjump.core.geomutils.Arc;
 import org.openjump.core.geomutils.GeoUtils;
 import org.openjump.core.geomutils.MathVector;
@@ -20,6 +22,14 @@ public abstract class Measure_MultiClickArcTool extends Measure_MultiClickTool {
 
   protected boolean clockwise = true;
   protected double fullAngle = 0.0;
+
+  public Measure_MultiClickArcTool(WorkbenchContext wc) {
+    super(wc);
+  }
+
+  public Measure_MultiClickArcTool(PlugInContext context) {
+    super(context.getWorkbenchContext());
+  }
 
   protected Shape getShape() throws NoninvertibleTransformException {
     if (coordinates.size() > 1) {
@@ -41,10 +51,7 @@ public abstract class Measure_MultiClickArcTool extends Measure_MultiClickTool {
       boolean cwQuad = ((fullAngle >= 0.0) && (fullAngle <= 90.0) && clockwise);
       boolean ccwQuad = ((fullAngle < 0.0) && (fullAngle >= -90.0) && !clockwise);
       if ((arcAngle <= 90.0) && (cwQuad || ccwQuad)) {
-        if (toRight)
-          clockwise = true;
-        else
-          clockwise = false;
+        clockwise = toRight;
       }
 
       if ((fullAngle > 90.0) || (fullAngle < -90)) {

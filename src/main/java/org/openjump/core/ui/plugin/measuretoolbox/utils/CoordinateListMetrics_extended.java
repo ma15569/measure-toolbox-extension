@@ -27,10 +27,12 @@ import com.vividsolutions.jump.workbench.ui.LayerViewPanel;
 
 public class CoordinateListMetrics_extended {
 
-  public static String sArea = I18N.get("ui.cursortool.CoordinateListMetrics.Area");
-  String sAzimuth = I18N.get("ui.cursortool.CoordinateListMetrics.Azimuth");
-  String sAngle = I18N.get("ui.cursortool.CoordinateListMetrics.Angle");
-  public static String sDistance = I18N.get("ui.cursortool.CoordinateListMetrics.Distance");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+
+  public static String sArea = i18n.get("ui.cursortool.CoordinateListMetrics.Area");
+  String sAzimuth = i18n.get("ui.cursortool.CoordinateListMetrics.Azimuth");
+  String sAngle = i18n.get("ui.cursortool.CoordinateListMetrics.Angle");
+  public static String sDistance = i18n.get("ui.cursortool.CoordinateListMetrics.Distance");
   //CoordinateListMetrics coo = new CoordinateListMetrics();
 
   /**
@@ -165,7 +167,7 @@ public class CoordinateListMetrics_extended {
         Coordinate b = coordinates.get(i);
         Coordinate c = coordinates.get(i - 1);
 
-        distance += computeGeographicLenght(b.y, b.x, c.y, c.x);
+        distance += computeGeographicLength(b.y, b.x, c.y, c.x);
       }
     } else {
 
@@ -203,7 +205,7 @@ public class CoordinateListMetrics_extended {
 
       if (ToolboxMeasurePlugIn.coordinateCheck.isSelected()) {
 
-        lastsegment = CoordinateListMetrics_extended.computeGeographicLenght(a.y, a.x, b.y, b.x);
+        lastsegment = CoordinateListMetrics_extended.computeGeographicLength(a.y, a.x, b.y, b.x);
 
       } else {
 
@@ -225,7 +227,7 @@ public class CoordinateListMetrics_extended {
   public static double distanceBetweenAB(Coordinate a, Coordinate b) {
     double segment;
     if (ToolboxMeasurePlugIn.coordinateCheck.isSelected()) {
-      segment = CoordinateListMetrics_extended.computeGeographicLenght(a.y, a.x, b.y, b.x);
+      segment = CoordinateListMetrics_extended.computeGeographicLength(a.y, a.x, b.y, b.x);
     } else {
       segment = a.distance(b);
     }
@@ -419,7 +421,7 @@ public class CoordinateListMetrics_extended {
       for (int i = 1; i < coordinates.size(); i++) {
         Coordinate a1 = coordinates.get(i);
         Coordinate b1 = coordinates.get(i - 1);
-        dist += computeGeographicLenght(a1.y, a1.x, b1.y, b1.x);
+        dist += computeGeographicLength(a1.y, a1.x, b1.y, b1.x);
       }
     } else {
       dist = arc.getLineString().getLength();
@@ -489,7 +491,7 @@ public class CoordinateListMetrics_extended {
    * @param lon2 longitude of second coordinate
    * @return distance
    */
-  public static double computeGeographicLenght(double lat1, double lon1, double lat2, double lon2) {
+  public static double computeGeographicLength(double lat1, double lon1, double lat2, double lon2) {
 
     double L = Math.toRadians(lon2 - lon1);
     double U1 = Math.atan((1 - Flattening) * Math.tan(Math.toRadians(lat1)));

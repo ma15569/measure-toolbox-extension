@@ -2,6 +2,8 @@ package org.openjump.core.ui.plugin.measuretoolbox.utils;
 
 import java.awt.event.MouseEvent;
 
+import com.vividsolutions.jump.workbench.WorkbenchContext;
+import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import org.locationtech.jts.geom.Coordinate;
 
 /**
@@ -14,7 +16,13 @@ public abstract class Measure_NClickTool extends Measure_MultiClickTool {
   // This class has been tested only with n=1 and n=2. [Jon Aquino]
   private int n;
 
-  public Measure_NClickTool(int n) {
+  public Measure_NClickTool(WorkbenchContext wc, int n) {
+    super(wc);
+    this.n = n;
+  }
+
+  public Measure_NClickTool(PlugInContext context, int n) {
+    super(context);
     this.n = n;
   }
 

@@ -28,8 +28,7 @@
 
 package org.openjump.core.ui.plugin.measuretoolbox.scale;
 
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
-import com.vividsolutions.jump.workbench.WorkbenchContext;
+import com.vividsolutions.jump.I18N;
 import com.vividsolutions.jump.workbench.plugin.AbstractPlugIn;
 import com.vividsolutions.jump.workbench.plugin.EnableCheckFactory;
 import com.vividsolutions.jump.workbench.plugin.MultiEnableCheck;
@@ -55,19 +54,19 @@ import com.vividsolutions.jump.workbench.ui.plugin.FeatureInstaller;
  */
 public class GeoShowScalePlugIn extends AbstractPlugIn {
 
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+
   public String Name = "Show scale bar";
 
   @Override
   public void initialize(PlugInContext context) {
-    WorkbenchContext workbenchContext = context.getWorkbenchContext();
-    FeatureInstaller featureInstaller = new FeatureInstaller(
-        workbenchContext);
+    FeatureInstaller featureInstaller = context.getFeatureInstaller();
 
     featureInstaller.addMainMenuPlugin(this, new String[]{
-            MenuNames.PLUGINS, I18NPlug.getI18N("Menu.Measure"),
+            MenuNames.PLUGINS, i18n.get("Menu.Measure"),
             // I18NPlug.getI18N("Measure_geographic_coordinates")
             "Frame"}, Name, true, IconLoader.icon("show_scale_text.png"),
-        createEnableCheck(workbenchContext));
+        getEnableCheck(context));
   }
 
   @Override
@@ -85,10 +84,9 @@ public class GeoShowScalePlugIn extends AbstractPlugIn {
     return true;
   }
 
-  public static MultiEnableCheck createEnableCheck(
-      WorkbenchContext workbenchContext) {
-    EnableCheckFactory checkFactory = new EnableCheckFactory(
-        workbenchContext);
+  public MultiEnableCheck getEnableCheck(PlugInContext context) {
+
+    EnableCheckFactory checkFactory = context.getCheckFactory();
 
     return new MultiEnableCheck().add(checkFactory
         .createWindowWithSelectionManagerMustBeActiveCheck());

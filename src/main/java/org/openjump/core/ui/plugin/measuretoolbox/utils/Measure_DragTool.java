@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.vividsolutions.jump.workbench.plugin.PlugInContext;
 import org.openjump.core.ui.util.ScreenScale;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -55,6 +56,11 @@ public abstract class Measure_DragTool extends AbstractCursorTool {
 
   public static final int DEFAULT_VIEW_CLICK_BUFFER = 2;
   private int viewClickBuffer = DEFAULT_VIEW_CLICK_BUFFER;
+
+  public Measure_DragTool(PlugInContext context) {
+    super(context.getWorkbenchContext());
+  }
+
   /**
    * Modify using #setSource
    */

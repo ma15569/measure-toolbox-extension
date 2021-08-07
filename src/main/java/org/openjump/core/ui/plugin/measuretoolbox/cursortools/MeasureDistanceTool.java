@@ -10,7 +10,6 @@ import javax.swing.Icon;
 import javax.swing.JOptionPane;
 
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 import org.openjump.core.ui.plugin.measuretoolbox.plugins.ToolboxMeasurePlugIn;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.CoordinateListMetrics_extended;
 import org.openjump.core.ui.plugin.measuretoolbox.utils.MeasurementLayerFinder;
@@ -35,14 +34,15 @@ import com.vividsolutions.jump.workbench.ui.LayerViewPanel;
  */
 public class MeasureDistanceTool extends Measure_MultiClickTool {
 
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
 
-  public static final String NAME = I18NPlug
-      .getI18N("MeasureToolbox.MeasureTools.Distance");
+  public static final String NAME = i18n
+      .get("MeasureToolbox.MeasureTools.Distance");
   public static final Icon ICON = IconLoader
       .icon("Ruler_linestring.gif");
 
   //String sDistance = I18N.get("ui.cursortool.CoordinateListMetrics.Distance");
-  public static String sLastSegment = I18NPlug.getI18N("MeasureToolbox.last_segment");
+  public static String sLastSegment = i18n.get("MeasureToolbox.last_segment");
 
   double area;
   double perimeter;
@@ -58,6 +58,7 @@ public class MeasureDistanceTool extends Measure_MultiClickTool {
   PlugInContext context;
 
   public MeasureDistanceTool(PlugInContext context) {
+    super(context);
     this.context = context;
     setStroke(new BasicStroke(2));
     //setMetricsDisplay(new CoordinateListMetrics_extended());
@@ -86,9 +87,8 @@ public class MeasureDistanceTool extends Measure_MultiClickTool {
         JOptionPane
             .showMessageDialog(
                 null,
-                I18NPlug
-                    .getI18N("MeasureToolbox.geodesy-warning"),
-                I18NPlug.getI18N("MeasureToolbox.error"),
+                i18n.get("MeasureToolbox.geodesy-warning"),
+                i18n.get("MeasureToolbox.error"),
                 JOptionPane.ERROR_MESSAGE);
         return;
       }
@@ -132,7 +132,7 @@ public class MeasureDistanceTool extends Measure_MultiClickTool {
     feature.setGeometry(measureGeometry);
     feature.setAttribute("TYPE", "Length");
     feature.setAttribute("TEXT", unitConverter.decimalformat(length) + unitConverter.measuredLengthUnit());
-    feature.setAttribute("LENGHT", length);
+    feature.setAttribute("LENGTH", length);
     feature.setAttribute("UNIT", unitConverter.measureUnit());
     feature.setAttribute("GEOM", getLineString());
     return feature;

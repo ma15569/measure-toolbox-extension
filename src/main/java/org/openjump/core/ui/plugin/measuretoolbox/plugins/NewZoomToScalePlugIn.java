@@ -40,7 +40,6 @@ package org.openjump.core.ui.plugin.measuretoolbox.plugins;
 import javax.swing.ImageIcon;
 
 import org.openjump.core.ui.plugin.measuretoolbox.icons.IconLoader;
-import org.openjump.core.ui.plugin.measuretoolbox.language.I18NPlug;
 import org.openjump.core.ui.plugin.measuretoolbox.scale.GeoShowScaleRenderer;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -66,15 +65,16 @@ import com.vividsolutions.jump.workbench.ui.Viewport;
  */
 public class NewZoomToScalePlugIn extends AbstractPlugIn {
 
-  public static ImageIcon ICON = IconLoader.icon("zoom_scale.png");
-  public static final String NAME = I18NPlug
-      .getI18N("MeasureToolbox.MeasurePlugin.NewZoomToScalePlugIn");
+  private static final I18N i18n = I18N.getInstance("org.openjump.core.ui.plugin.measuretoolbox");
+  private static final ImageIcon ICON = IconLoader.icon("zoom_scale.png");
+  public static final String NAME = i18n
+      .get("MeasureToolbox.MeasurePlugin.NewZoomToScalePlugIn");
 
   int scale = 25000;
   double oldHorizontalScale; // is calculated for panel-width not heigth!!)
   //double modelWidth = 0;
   //double panelWidth = 0;
-  String text = I18N
+  String text = I18N.JUMP
       .get("org.openjump.core.ui.plugin.view.ZoomToScalePlugIn.set-new-scale-to-zoom")
       + ":  1 : ";
 
@@ -89,8 +89,7 @@ public class NewZoomToScalePlugIn extends AbstractPlugIn {
 
   public static MultiEnableCheck createEnableCheck(
       WorkbenchContext workbenchContext) {
-    EnableCheckFactory checkFactory = new EnableCheckFactory(
-        workbenchContext);
+    EnableCheckFactory checkFactory = workbenchContext.createPlugInContext().getCheckFactory();
 
     return new MultiEnableCheck().add(checkFactory
         .createAtLeastNLayerablesMustExistCheck(1));
@@ -104,9 +103,9 @@ public class NewZoomToScalePlugIn extends AbstractPlugIn {
 
     MultiInputDialog dialog = new MultiInputDialog(
         context.getWorkbenchFrame(),
-        I18N.get("org.openjump.core.ui.plugin.view.ZoomToScalePlugIn.zoom-to-scale"),
+        I18N.JUMP.get("org.openjump.core.ui.plugin.view.ZoomToScalePlugIn.zoom-to-scale"),
         true);
-    setDialogValues(dialog, context);
+    setDialogValues(dialog);
     GUIUtil.centreOnWindow(dialog);
     dialog.setVisible(true);
     if (!dialog.wasOKPressed()) {
@@ -141,9 +140,9 @@ public class NewZoomToScalePlugIn extends AbstractPlugIn {
     port.zoom(g1.getEnvelopeInternal());
   }
 
-  private void setDialogValues(MultiInputDialog dialog, PlugInContext context) {
+  private void setDialogValues(MultiInputDialog dialog) {
 
-    dialog.addLabel(I18N
+    dialog.addLabel(I18N.JUMP
         .get("org.openjump.core.ui.plugin.view.ZoomToScalePlugIn.actual-scale-in-horizontal-direction")
         + " 1 : " + (int) this.oldHorizontalScale);
     int scaleD = (int) this.oldHorizontalScale;

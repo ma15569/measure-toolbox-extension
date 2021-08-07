@@ -56,7 +56,7 @@ public class GeoScreenScale {
     double maxx = port.getEnvelopeInModelCoordinates().getMaxX();
     double miny = port.getEnvelopeInModelCoordinates().getMinY();
     double maxy = port.getEnvelopeInModelCoordinates().getMaxY();
-    double modelWidth = CoordinateListMetrics_extended.computeGeographicLenght(miny, maxx, miny, minx);
+    double modelWidth = CoordinateListMetrics_extended.computeGeographicLength(miny, maxx, miny, minx);
     // double modelWidth = Formula.VicentyDistance(miny, maxx, miny, minx);
     //-----
     // example:
