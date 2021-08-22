@@ -30,14 +30,6 @@
             <version>2.0-main-SNAPSHOT</version>
         </dependency>
 
-        <!--dependency>
-            <groupId>org.openjump</groupId>
-            <artifactId>OpenJUMP</artifactId>
-            <version>2.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/OpenJUMP-20210412-b68329e.jar</systemPath>
-        </dependency-->
-
         <dependency>
             <groupId>org.locationtech.jts</groupId>
             <artifactId>jts-core</artifactId>
