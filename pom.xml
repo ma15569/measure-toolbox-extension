@@ -5,7 +5,7 @@
 
   <groupId>org.openjump</groupId>
   <artifactId>measure-toolbox-extension</artifactId>
-  <version>2.1.1-alpha</version>
+  <version>2.1.1</version>
 
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
